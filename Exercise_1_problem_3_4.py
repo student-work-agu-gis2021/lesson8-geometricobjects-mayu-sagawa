@@ -9,13 +9,13 @@
 # 
 
 # YOUR CODE HERE 1 to read the file
-fp="data/travelTimes_2015_Helsinki.txt "
+fp="data/travelTimes_2015_Helsinki.txt"
 
 #raise NotImplementedError()
 import pandas as pd 
 
 #Check how many rows and columns there are:
-data=pd.read_table(fp,sep=';')
+data=pd.read_table(fp,delimiter=';')
 
 
 # CODE FOR TESTING YOUR SOLUTION
@@ -73,10 +73,10 @@ print('dest_points length:', len(dest_points))
 
 # YOUR CODE HERE 4 to append points in orig_points and dest_points
 from shapely.geometry import Point
-for index,data in data.iterrrows():
+for index,row in data.iterrows():
   #Define points
-  orig=Point(data['from_x'],data['from_y'])
-  dest=Point(data['to_x'],data['to_y'])
+  orig=Point(row['from_x'],row['from_y'])
+  dest=Point(row['to_x'],row['to_y'])
   #append points
   orig_points.append(orig)
   dest_points.append(dest)
@@ -126,8 +126,8 @@ print('lines length:', len(lines))
 #raise NotImplementedError()
 from shapely.geometry import LineString
 for orig,dest in zip(orig_points,dest_points):
-  line=LineString(orig_points,dest_points)
-  lines.appends(line)
+  line=LineString([orig,dest])
+  lines.append(line)
 
 # CODE FOR TESTING YOUR SOLUTION
 
@@ -161,10 +161,12 @@ print("Total length of all lines is", round(total_length, 2))
 
 # YOUR CODE HERE 8 to define create_od_lines() and calculate_total_distance()
 def create_od_lines(x,y):
+  
   for orig,dest in zip(x,y):
    line=LineString([orig,dest])
    od_lines.append(line)
   return od_lines
+  
 
 def calculate_total_distance(Line):
   total_length=0
