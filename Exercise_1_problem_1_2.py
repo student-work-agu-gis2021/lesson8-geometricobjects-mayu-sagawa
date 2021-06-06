@@ -162,7 +162,7 @@ def get_area(polygon):
   Purpose:  returns the area of that geometry
   """
   assert type(polygon)==Polygon, "Input should be a Shapely Polygon -object!"
-  return Polygon(polygon)
+  return polygon.area
 # Test and demonstrate the usage of the function:
 get_area(poly1)
 
@@ -193,10 +193,10 @@ def get_length(geom):
   Purpose: check the type of the input and returns the length of the line if input is LineString and length of the exterior ring if input is Polygon
   """
   assert type(geom) ==LineString or type(geom)==Polygon, "'geom' should be either LineString or Polygon!"
-  if type(geom)==LineString:
+  if geom.geom_type=='LineString':
     return geom.length
-  if type(geom)==Polygon:
-    return geom._exterior.length
+  elif geom.geom_type=='Polygon':
+    return geom.exterior.length
 # Test and demonstrate the usage of the function:
 
 get_length(poly1)
